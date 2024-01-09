@@ -3,15 +3,17 @@ using StackExchange.Redis;
 
 namespace Redis.Sidecar.Cache;
 
+/// <inheritdoc />
 public class RedisCache(IDatabase database) : IRedisCache
 {
     private const int DefaultRedisExpirationMinutes = 60;
 
     /// <summary>
-    /// Instantiates a new instance of <see cref="RedisCache"/>.
+    /// Instantiates a new instance of <see cref="RedisCache"/> with a localhost Redis database.
     /// </summary>
     public RedisCache() : this(ConfigureRedis()) { }
 
+    /// <inheritdoc />
     public IDatabase Database => database;
 
     /// <summary>
@@ -22,33 +24,7 @@ public class RedisCache(IDatabase database) : IRedisCache
         var redis = ConnectionMultiplexer.Connect("localhost");
         return redis.GetDatabase();
     }
-
-    /// <inheritdoc />
-    public async Task<T?> GetAsync<T>(string key, TimeSpan? expiration = null) => await GetAsync<T>(key, null, expiration);
-
-    /// <inheritdoc />
-    public async Task<T?> GetAsync<T>(string key, Func<Task<T>>? function = null, TimeSpan? expiration = null)
-    {
-        var redisValue = await database.StringGetAsync(key);
-        if (redisValue.HasValue)
-        {
-            return JsonConvert.DeserializeObject<T>(redisValue!);
-        }
-
-        if (function is null)
-        {
-            return default;
-        }
-
-        var value = await function.Invoke();
-        if (value is not null)
-        {
-            await SetAsync(key, value, expiration);
-        }
-
-        return value;
-    }
-
+    
     /// <inheritdoc />
     public T? Get<T>(string key, Func<T>? function = null, TimeSpan? expiration = null)
     {
@@ -72,6 +48,29 @@ public class RedisCache(IDatabase database) : IRedisCache
         return value;
     }
 
+    /// <inheritdoc />
+    public async Task<T?> GetAsync<T>(string key, Func<Task<T>>? function = null, TimeSpan? expiration = null)
+    {
+        var redisValue = await database.StringGetAsync(key);
+        if (redisValue.HasValue)
+        {
+            return JsonConvert.DeserializeObject<T>(redisValue!);
+        }
+
+        if (function is null)
+        {
+            return default;
+        }
+
+        var value = await function.Invoke();
+        if (value is not null)
+        {
+            var temp = await SetAsync(key, value, expiration);
+        }
+
+        return value;
+    }
+    
     /// <inheritdoc />
     public bool Set<T>(string key, T value, TimeSpan? expiration = null)
     {
