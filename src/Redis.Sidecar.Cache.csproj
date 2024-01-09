@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <LangVersion>latest</LangVersion>
+        <Version>1.0.0</Version>
+        <Title>Redis Sidecar Cache</Title>
+        <Authors>Owen Krueger</Authors>
+        <RootNamespace>Redis.Sidecar.Cache</RootNamespace>
+        <Description>Extensions for managing a Redis sidecar cache.</Description>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageProjectUrl>https://github.com/Owen-Krueger/Redis.Sidecar.Cache</PackageProjectUrl>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <PackageTags>Redis;Sidecar;Cache;StackExchange.Redis</PackageTags>
+        <RepositoryUrl>https://github.com/Owen-Krueger/Redis.Sidecar.Cache</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageReleaseNotes>https://github.com/Owen-Krueger/Redis.Sidecar.Cache/releases/tag/v1.0.0</PackageReleaseNotes>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+      <PackageReference Include="StackExchange.Redis" Version="2.7.10" />
+      <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    </ItemGroup>
+
+</Project>
