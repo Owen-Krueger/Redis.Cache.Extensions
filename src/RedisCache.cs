@@ -65,7 +65,7 @@ public class RedisCache(IDatabase database) : IRedisCache
         var value = await function.Invoke();
         if (value is not null)
         {
-            var temp = await SetAsync(key, value, expiration);
+            await SetAsync(key, value, expiration);
         }
 
         return value;
