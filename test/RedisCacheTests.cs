@@ -1,5 +1,6 @@
 ﻿using Moq;
 using Moq.AutoMock;
+using Newtonsoft.Json;
 using StackExchange.Redis;
 
 namespace Redis.Sidecar.Cache.Tests;
@@ -98,6 +99,17 @@ public class RedisCacheTests
 
         var response = service.Get(Key, functionMock.Object);
         Assert.That(response, Is.EqualTo(Value));
+    }
+
+    [Test]
+    public void Get_BadJson_JsonReaderExceptionThrown()
+    {
+        var mock = new AutoMocker();
+        var databaseMock = mock.GetMock<IDatabase>();
+        databaseMock.Setup(x => x.StringGet(Key, CommandFlags.None)).Returns("BAD JSON PAYLOAD");
+        var service = mock.CreateInstance<RedisCache>();
+
+        Assert.Throws<JsonReaderException>(() => service.Get<int>(Key));
     }
     
     [Test]
@@ -200,6 +212,19 @@ public class RedisCacheTests
 
         var response = await service.GetAsync(Key, functionMock.Object);
         Assert.That(response, Is.EqualTo(Value));
+    }
+    
+    [Test]
+    public void GetAsync_BadJson_JsonReaderExceptionThrown()
+    {
+        var mock = new AutoMocker();
+        var databaseMock = mock.GetMock<IDatabase>();
+        databaseMock
+            .Setup(x => x.StringGetAsync(Key, CommandFlags.None))
+            .ReturnsAsync("BAD JSON PAYLOAD");
+        var service = mock.CreateInstance<RedisCache>();
+
+        Assert.ThrowsAsync<JsonReaderException>(() => service.GetAsync<int>(Key));
     }
     
     [Test]

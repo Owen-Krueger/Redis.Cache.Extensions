@@ -1,4 +1,5 @@
-﻿using StackExchange.Redis;
+﻿using Newtonsoft.Json;
+using StackExchange.Redis;
 
 namespace Redis.Sidecar.Cache;
 
@@ -19,6 +20,7 @@ public interface IRedisCache
     /// <param name="key">The identifier for the value to get from the cache.</param>
     /// <param name="function">Optional. Function to invoke to get the value to set in the cache, if the value isn't found in the cache.</param>
     /// <param name="expiration">Optional. Time for the object to live in the cache. Defaults to 1 hour if not provided.</param>
+    /// <exception cref="JsonReaderException">Thrown if the string value in the cache cannot be converted to type <see cref="T"/>.</exception>
     /// <typeparam name="T">The type of object stored in the cache.</typeparam>
     /// <returns>The value of the object in the cache. Null if not found.</returns>
     T? Get<T>(string key, Func<T>? function = null, TimeSpan? expiration = null);
@@ -30,6 +32,7 @@ public interface IRedisCache
     /// <param name="key">The identifier for the value to get from the cache.</param>
     /// <param name="function">Optional. Function to invoke to get the value to set in the cache, if the value isn't found in the cache.</param>
     /// <param name="expiration">Optional. Time for the object to live in the cache. Defaults to 1 hour if not provided.</param>
+    /// <exception cref="JsonReaderException">Thrown if the string value in the cache cannot be converted to type <see cref="T"/>.</exception>
     /// <typeparam name="T">The type of object stored in the cache.</typeparam>
     /// <returns>The value of the object in the cache. Null if not found.</returns>
     Task<T?> GetAsync<T>(string key, Func<Task<T>>? function = null, TimeSpan? expiration = null);
