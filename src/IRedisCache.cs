@@ -14,8 +14,8 @@ public interface IRedisCache
     IDatabase Database { get; }
     
     /// <summary>
-    /// Gets the object at the key from the cache. Execute the <see cref="function"/> to get
-    /// the object and add it in the cache.
+    /// Gets the object at the key from the cache.
+    /// Executes the <see cref="function"/> to get the object and add it in the cache.
     /// </summary>
     /// <param name="key">The identifier for the value to get from the cache.</param>
     /// <param name="function">Function to invoke to get the value to set in the cache, if the value isn't found in the cache.</param>
@@ -26,8 +26,9 @@ public interface IRedisCache
     T? Get<T>(string key, Func<T> function, Func<T, bool> condition);
     
     /// <summary>
-    /// Gets the object at the key from the cache. If <see cref="function"/> is provided, execute the function to get
-    /// the object and add it in the cache.
+    /// Gets the object at the key from the cache.
+    /// If provided, executes the <see cref="function"/> to get the object and add it in the cache.
+    /// If provided, only saves to the cache if the <see cref="Condition"/> is met.
     /// </summary>
     /// <param name="key">The identifier for the value to get from the cache.</param>
     /// <param name="function">Optional. Function to invoke to get the value to set in the cache, if the value isn't found in the cache.</param>
@@ -39,8 +40,9 @@ public interface IRedisCache
     T? Get<T>(string key, Func<T>? function = null, TimeSpan? expiration = null, Func<T, bool>? condition = null);
     
     /// <summary>
-    /// Gets the object at the key from the cache. Execute the <see cref="function"/> to get
-    /// the object and add it in the cache.
+    /// Gets the object at the key from the cache.
+    /// Executes the <see cref="function"/> to get the object and add it in the cache.
+    /// Only saves to the cache if the <see cref="Condition"/> is met.
     /// </summary>
     /// <param name="key">The identifier for the value to get from the cache.</param>
     /// <param name="function">Function to invoke to get the value to set in the cache, if the value isn't found in the cache.</param>
@@ -51,8 +53,10 @@ public interface IRedisCache
     Task<T?> GetAsync<T>(string key, Func<Task<T>> function, Func<T, bool> condition);
     
     /// <summary>
-    /// Gets the object at the key from the cache asynchronously. If <see cref="function"/> is provided, execute the
-    /// function to get the object and add it in the cache.
+    /// Gets the object at the key from the cache asynchronously.
+    /// If <see cref="function"/> is provided, execute the function to get the object and add it in the cache.
+    /// If provided, executes the <see cref="function"/> to get the object and add it in the cache.
+    /// If provided, only saves to the cache if the <see cref="Condition"/> is met.
     /// </summary>
     /// <param name="key">The identifier for the value to get from the cache.</param>
     /// <param name="function">Optional. Function to invoke to get the value to set in the cache, if the value isn't found in the cache.</param>
@@ -67,7 +71,7 @@ public interface IRedisCache
     /// Sets the object at the key in the cache.
     /// </summary>
     /// <param name="key">The identifier for the value to set in the cache.</param>
-    /// <param name="value">The value to set for the key.</param>
+    /// <param name="value">The value to set in the cache for the key.</param>
     /// <param name="expiration">Time for the object to live in the cache. Defaults to 1 hour if not provided.</param>
     /// <typeparam name="T">The type of object stored in the cache.</typeparam>
     /// <returns>True/False if the object was set in the cache successfully.</returns>
@@ -75,9 +79,10 @@ public interface IRedisCache
     
     /// <summary>
     /// Sets the object at the key in the cache.
+    /// Only saves to the cache if the <see cref="Condition"/> is met.
     /// </summary>
     /// <param name="key">The identifier for the value to set in the cache.</param>
-    /// <param name="value">The value to set for the key.</param>
+    /// <param name="value">The value to set in the cache for the key.</param>
     /// <param name="condition">The condition that must be true to save the value to the cache.</param>
     /// <typeparam name="T">The type of object stored in the cache.</typeparam>
     /// <returns>True/False if the object was set in the cache successfully.</returns>
@@ -85,9 +90,10 @@ public interface IRedisCache
     
     /// <summary>
     /// Sets the object at the key in the cache.
+    /// If provided, only saves to the cache if the <see cref="Condition"/> is met.
     /// </summary>
     /// <param name="key">The identifier for the value to set in the cache.</param>
-    /// <param name="value">The value to set for the key.</param>
+    /// <param name="value">The value to set in the cache for the key.</param>
     /// <param name="expiration">Optional. Time for the object to live in the cache. Defaults to 1 hour if not provided.</param>
     /// <param name="condition">Optional. If provided, the condition that must be true to save the value to the cache.</param>
     /// <typeparam name="T">The type of object stored in the cache.</typeparam>
@@ -98,7 +104,7 @@ public interface IRedisCache
     /// Sets the object at the key in the cache asynchronously.
     /// </summary>
     /// <param name="key">The identifier for the value to set in the cache.</param>
-    /// <param name="value">The value to set for the key.</param>
+    /// <param name="value">The value to set in the cache for the key.</param>
     /// <param name="expiration">Optional. Time for the object to live in the cache. Defaults to 1 hour if not provided.</param>
     /// <typeparam name="T">The type of object stored in the cache.</typeparam>
     /// <returns>True/False if the object was set in the cache successfully.</returns>
@@ -106,9 +112,10 @@ public interface IRedisCache
     
     /// <summary>
     /// Sets the object at the key in the cache asynchronously.
+    /// Only saves to the cache if the <see cref="Condition"/> is met.
     /// </summary>
     /// <param name="key">The identifier for the value to set in the cache.</param>
-    /// <param name="value">The value to set for the key.</param>
+    /// <param name="value">The value to set in the cache for the key.</param>
     /// <param name="condition">The condition that must be true to save the value to the cache.</param>
     /// <typeparam name="T">The type of object stored in the cache.</typeparam>
     /// <returns>True/False if the object was set in the cache successfully.</returns>
@@ -116,9 +123,10 @@ public interface IRedisCache
     
     /// <summary>
     /// Sets the object at the key in the cache asynchronously.
+    /// If provided, only saves to the cache if the <see cref="Condition"/> is met.
     /// </summary>
     /// <param name="key">The identifier for the value to set in the cache.</param>
-    /// <param name="value">The value to set for the key.</param>
+    /// <param name="value">The value to set in the cache for the key.</param>
     /// <param name="expiration">Optional. Time for the object to live in the cache. Defaults to 1 hour if not provided.</param>
     /// <param name="condition">Optional. The condition that must be true to save the value to the cache.</param>
     /// <typeparam name="T">The type of object stored in the cache.</typeparam>
