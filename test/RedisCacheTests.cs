@@ -100,6 +100,48 @@ public class RedisCacheTests
         var response = service.Get(Key, functionMock.Object);
         Assert.That(response, Is.EqualTo(Value));
     }
+    
+    [Test]
+    public void Get_ConditionMet_ValueSaved()
+    {
+        var mock = new AutoMocker();
+        var databaseMock = mock.GetMock<IDatabase>();
+        databaseMock
+            .Setup(x => x.StringGet(Key, CommandFlags.None))
+            .Returns(new RedisValue());
+        var functionMock = new Mock<Func<int>>();
+        functionMock
+            .Setup(x => x.Invoke())
+            .Returns(Value);
+        var service = mock.CreateInstance<RedisCache>();
+
+        var response = service.Get(Key, functionMock.Object, _ => true);
+        Assert.That(response, Is.EqualTo(Value));
+        databaseMock
+            .Verify(x => x.StringSet(Key, It.IsAny<RedisValue>(), TimeSpan.FromMinutes(60), false, When.Always,
+                CommandFlags.None), Times.Once);
+    }
+    
+    [Test]
+    public void Get_ConditionNotMet_ValueNotSaved()
+    {
+        var mock = new AutoMocker();
+        var databaseMock = mock.GetMock<IDatabase>();
+        databaseMock
+            .Setup(x => x.StringGet(Key, CommandFlags.None))
+            .Returns(new RedisValue());
+        var functionMock = new Mock<Func<int>>();
+        functionMock
+            .Setup(x => x.Invoke())
+            .Returns(Value);
+        var service = mock.CreateInstance<RedisCache>();
+
+        var response = service.Get(Key, functionMock.Object, _ => false);
+        Assert.That(response, Is.EqualTo(Value));
+        databaseMock
+            .Verify(x => x.StringSet(Key, It.IsAny<RedisValue>(), TimeSpan.FromMinutes(60), false, When.Always,
+                CommandFlags.None), Times.Never);
+    }
 
     [Test]
     public void Get_BadJson_JsonReaderExceptionThrown()
@@ -206,12 +248,54 @@ public class RedisCacheTests
         var functionMock = new Mock<Func<Task<int>>>();
         functionMock.Setup(x => x.Invoke()).ReturnsAsync(Value);
         databaseMock
-            .Setup(x => x.StringSet(Key, It.IsAny<RedisValue>(), redisCacheMinutes, false, When.Always, CommandFlags.None))
-            .Returns(false);
+            .Setup(x => x.StringSetAsync(Key, It.IsAny<RedisValue>(), redisCacheMinutes, false, When.Always, CommandFlags.None))
+            .ReturnsAsync(false);
         var service = mock.CreateInstance<RedisCache>();
 
         var response = await service.GetAsync(Key, functionMock.Object);
         Assert.That(response, Is.EqualTo(Value));
+    }
+    
+    [Test]
+    public async Task GetAsync_ConditionMet_ValueSaved()
+    {
+        var mock = new AutoMocker();
+        var databaseMock = mock.GetMock<IDatabase>();
+        databaseMock
+            .Setup(x => x.StringGetAsync(Key, CommandFlags.None))
+            .ReturnsAsync(new RedisValue());
+        var functionMock = new Mock<Func<Task<int>>>();
+        functionMock
+            .Setup(x => x.Invoke())
+            .ReturnsAsync(Value);
+        var service = mock.CreateInstance<RedisCache>();
+
+        var response = await service.GetAsync(Key, functionMock.Object, _ => true);
+        Assert.That(response, Is.EqualTo(Value));
+        databaseMock
+            .Verify(x => x.StringSetAsync(Key, It.IsAny<RedisValue>(), TimeSpan.FromMinutes(60), false, When.Always,
+                CommandFlags.None), Times.Once);
+    }
+    
+    [Test]
+    public async Task GetAsync_ConditionNotMet_ValueNotSaved()
+    {
+        var mock = new AutoMocker();
+        var databaseMock = mock.GetMock<IDatabase>();
+        databaseMock
+            .Setup(x => x.StringGetAsync(Key, CommandFlags.None))
+            .ReturnsAsync(new RedisValue());
+        var functionMock = new Mock<Func<Task<int>>>();
+        functionMock
+            .Setup(x => x.Invoke())
+            .ReturnsAsync(Value);
+        var service = mock.CreateInstance<RedisCache>();
+
+        var response = await service.GetAsync(Key, functionMock.Object, _ => false);
+        Assert.That(response, Is.EqualTo(Value));
+        databaseMock
+            .Verify(x => x.StringSetAsync(Key, It.IsAny<RedisValue>(), TimeSpan.FromMinutes(60), false, When.Always,
+                CommandFlags.None), Times.Never);
     }
     
     [Test]
@@ -256,6 +340,35 @@ public class RedisCacheTests
     }
     
     [Test]
+    public void Set_ConditionMet_ValueSet()
+    {
+        var mock = new AutoMocker();
+        var databaseMock = mock.GetMock<IDatabase>();
+        databaseMock
+            .Setup(x =>
+                x.StringSet(Key, Value.ToString(), TimeSpan.FromMinutes(60), false, When.Always, CommandFlags.None))
+            .Returns(true);
+        var service = mock.CreateInstance<RedisCache>();
+
+        var response = service.Set(Key, Value, _ => true);
+        Assert.That(response, Is.True);
+    }
+    
+    [Test]
+    public void Set_ConditionNotMet_ValueNotSet()
+    {
+        var mock = new AutoMocker();
+        var databaseMock = mock.GetMock<IDatabase>();
+        var service = mock.CreateInstance<RedisCache>();
+
+        var response = service.Set(Key, Value, _ => false);
+        Assert.That(response, Is.False);
+        databaseMock
+            .Verify(x =>
+                x.StringSet(Key, Value.ToString(), TimeSpan.FromMinutes(60), false, When.Always, CommandFlags.None), Times.Never);
+    }
+    
+    [Test]
     public async Task SetAsync_ValueSet_TrueReturned()
     {
         var mock = new AutoMocker();
@@ -281,6 +394,35 @@ public class RedisCacheTests
 
         var response = await service.SetAsync(Key, Value);
         Assert.That(response, Is.False);
+    }
+    
+    [Test]
+    public async Task SetAsync_ConditionMet_ValueSet()
+    {
+        var mock = new AutoMocker();
+        var databaseMock = mock.GetMock<IDatabase>();
+        databaseMock
+            .Setup(x =>
+                x.StringSetAsync(Key, Value.ToString(), TimeSpan.FromMinutes(60), false, When.Always, CommandFlags.None))
+            .ReturnsAsync(true);
+        var service = mock.CreateInstance<RedisCache>();
+
+        var response = await service.SetAsync(Key, Value, _ => true);
+        Assert.That(response, Is.True);
+    }
+    
+    [Test]
+    public async Task SetAsync_ConditionNotMet_ValueNotSet()
+    {
+        var mock = new AutoMocker();
+        var databaseMock = mock.GetMock<IDatabase>();
+        var service = mock.CreateInstance<RedisCache>();
+
+        var response = await service.SetAsync(Key, Value, _ => false);
+        Assert.That(response, Is.False);
+        databaseMock
+            .Verify(x =>
+                x.StringSetAsync(Key, Value.ToString(), TimeSpan.FromMinutes(60), false, When.Always, CommandFlags.None), Times.Never);
     }
 
     [Test]

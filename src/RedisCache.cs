@@ -11,22 +11,26 @@ public class RedisCache(IDatabase database) : IRedisCache
     /// <summary>
     /// Instantiates a new instance of <see cref="RedisCache"/> with a localhost Redis database.
     /// </summary>
-    public RedisCache() : this(ConfigureRedis()) { }
+    public RedisCache() : this(ConfigureLocalRedis()) { }
 
     /// <inheritdoc />
     public IDatabase Database => database;
 
     /// <summary>
-    /// Method handling configuration of redis.
+    /// Set up Redis database using localhost instance of Redis Sidecar.
     /// </summary>
-    private static IDatabase ConfigureRedis()
+    private static IDatabase ConfigureLocalRedis()
     {
         var redis = ConnectionMultiplexer.Connect("localhost");
         return redis.GetDatabase();
     }
-    
+
     /// <inheritdoc />
-    public T? Get<T>(string key, Func<T>? function = null, TimeSpan? expiration = null)
+    public T? Get<T>(string key, Func<T> function, Func<T, bool> condition) =>
+        Get(key, function, null, condition);
+
+    /// <inheritdoc />
+    public T? Get<T>(string key, Func<T>? function = null, TimeSpan? expiration = null, Func<T, bool>? condition = null)
     {
         var redisValue = database.StringGet(key);
         if (redisValue.HasValue)
@@ -42,14 +46,18 @@ public class RedisCache(IDatabase database) : IRedisCache
         var value = function.Invoke();
         if (value is not null)
         {
-            Set(key, value, expiration);
+            Set(key, value, expiration, condition);
         }
 
         return value;
     }
+    
+    /// <inheritdoc />
+    public async Task<T?> GetAsync<T>(string key, Func<Task<T>> function, Func<T, bool> condition) =>
+        await GetAsync(key, function, null, condition);
 
     /// <inheritdoc />
-    public async Task<T?> GetAsync<T>(string key, Func<Task<T>>? function = null, TimeSpan? expiration = null)
+    public async Task<T?> GetAsync<T>(string key, Func<Task<T>>? function = null, TimeSpan? expiration = null, Func<T, bool>? condition = null)
     {
         var redisValue = await database.StringGetAsync(key);
         if (redisValue.HasValue)
@@ -65,22 +73,48 @@ public class RedisCache(IDatabase database) : IRedisCache
         var value = await function.Invoke();
         if (value is not null)
         {
-            await SetAsync(key, value, expiration);
+            await SetAsync(key, value, expiration, condition);
         }
 
         return value;
     }
-    
+
+    public bool Set<T>(string key, T value, TimeSpan expiration) =>
+        Set(key, value, expiration, null);
+
     /// <inheritdoc />
-    public bool Set<T>(string key, T value, TimeSpan? expiration = null)
+    public bool Set<T>(string key, T value, Func<T, bool> condition) =>
+        Set(key, value, null, condition);
+
+    /// <inheritdoc />
+    public bool Set<T>(string key, T value, TimeSpan? expiration = null, Func<T, bool>? condition = null)
     {
+        if (condition is not null && !condition.Invoke(value))
+        {
+            return false;
+        }
+        
         var jsonValue = JsonConvert.SerializeObject(value);
         return database.StringSet(key, jsonValue, expiration ?? TimeSpan.FromMinutes(DefaultRedisExpirationMinutes));
+
     }
 
     /// <inheritdoc />
-    public async Task<bool> SetAsync<T>(string key, T value, TimeSpan? expiration = null)
+    public async Task<bool> SetAsync<T>(string key, T value, TimeSpan expiration) =>
+        await SetAsync(key, value, expiration, null);
+
+    /// <inheritdoc />
+    public async Task<bool> SetAsync<T>(string key, T value, Func<T, bool> condition) =>
+        await SetAsync(key, value, null, condition);
+
+    /// <inheritdoc />
+    public async Task<bool> SetAsync<T>(string key, T value, TimeSpan? expiration = null, Func<T, bool>? condition = null)
     {
+        if (condition is not null && !condition.Invoke(value))
+        {
+            return false;
+        }
+        
         var jsonValue = JsonConvert.SerializeObject(value);
         return await database.StringSetAsync(key, jsonValue, expiration ?? TimeSpan.FromMinutes(DefaultRedisExpirationMinutes));
     }

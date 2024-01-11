@@ -1,3 +1,11 @@
+# 1.1.0 (2024-01-11)
+## Features
+- Added `condition` parameter to optionally save to the cache when a particular condition is met.
+- Added additional overrides to allow for more flexible implementations.
+
+## Misc
+- Updated README to describe the package and its functionality.
+
 # 1.0.1 (2024-01-10)
 ## Misc
 - Added additional documentation on exceptions that can be raised during Get process.
