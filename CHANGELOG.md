@@ -1,3 +1,7 @@
+# 1.1.1 (2024-01-11)
+## Misc
+- Clean up existing comments and add missing tags.
+
 # 1.1.0 (2024-01-11)
 ## Features
 - Added `condition` parameter to optionally save to the cache when a particular condition is met.

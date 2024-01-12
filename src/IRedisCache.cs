@@ -28,7 +28,7 @@ public interface IRedisCache
     /// <summary>
     /// Gets the object at the key from the cache.
     /// If provided, executes the <see cref="function"/> to get the object and add it in the cache.
-    /// If provided, only saves to the cache if the <see cref="Condition"/> is met.
+    /// If provided, only saves to the cache if the <see cref="condition"/> is met.
     /// </summary>
     /// <param name="key">The identifier for the value to get from the cache.</param>
     /// <param name="function">Optional. Function to invoke to get the value to set in the cache, if the value isn't found in the cache.</param>
@@ -42,7 +42,7 @@ public interface IRedisCache
     /// <summary>
     /// Gets the object at the key from the cache.
     /// Executes the <see cref="function"/> to get the object and add it in the cache.
-    /// Only saves to the cache if the <see cref="Condition"/> is met.
+    /// Only saves to the cache if the <see cref="condition"/> is met.
     /// </summary>
     /// <param name="key">The identifier for the value to get from the cache.</param>
     /// <param name="function">Function to invoke to get the value to set in the cache, if the value isn't found in the cache.</param>
@@ -56,7 +56,7 @@ public interface IRedisCache
     /// Gets the object at the key from the cache asynchronously.
     /// If <see cref="function"/> is provided, execute the function to get the object and add it in the cache.
     /// If provided, executes the <see cref="function"/> to get the object and add it in the cache.
-    /// If provided, only saves to the cache if the <see cref="Condition"/> is met.
+    /// If provided, only saves to the cache if the <see cref="condition"/> is met.
     /// </summary>
     /// <param name="key">The identifier for the value to get from the cache.</param>
     /// <param name="function">Optional. Function to invoke to get the value to set in the cache, if the value isn't found in the cache.</param>
@@ -79,7 +79,7 @@ public interface IRedisCache
     
     /// <summary>
     /// Sets the object at the key in the cache.
-    /// Only saves to the cache if the <see cref="Condition"/> is met.
+    /// Only saves to the cache if the <see cref="condition"/> is met.
     /// </summary>
     /// <param name="key">The identifier for the value to set in the cache.</param>
     /// <param name="value">The value to set in the cache for the key.</param>
@@ -90,7 +90,7 @@ public interface IRedisCache
     
     /// <summary>
     /// Sets the object at the key in the cache.
-    /// If provided, only saves to the cache if the <see cref="Condition"/> is met.
+    /// If provided, only saves to the cache if the <see cref="condition"/> is met.
     /// </summary>
     /// <param name="key">The identifier for the value to set in the cache.</param>
     /// <param name="value">The value to set in the cache for the key.</param>
@@ -112,7 +112,7 @@ public interface IRedisCache
     
     /// <summary>
     /// Sets the object at the key in the cache asynchronously.
-    /// Only saves to the cache if the <see cref="Condition"/> is met.
+    /// Only saves to the cache if the <see cref="condition"/> is met.
     /// </summary>
     /// <param name="key">The identifier for the value to set in the cache.</param>
     /// <param name="value">The value to set in the cache for the key.</param>
@@ -123,7 +123,7 @@ public interface IRedisCache
     
     /// <summary>
     /// Sets the object at the key in the cache asynchronously.
-    /// If provided, only saves to the cache if the <see cref="Condition"/> is met.
+    /// If provided, only saves to the cache if the <see cref="condition"/> is met.
     /// </summary>
     /// <param name="key">The identifier for the value to set in the cache.</param>
     /// <param name="value">The value to set in the cache for the key.</param>

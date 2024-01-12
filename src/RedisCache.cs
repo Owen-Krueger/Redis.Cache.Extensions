@@ -79,6 +79,7 @@ public class RedisCache(IDatabase database) : IRedisCache
         return value;
     }
 
+    /// <inheritdoc />
     public bool Set<T>(string key, T value, TimeSpan expiration) =>
         Set(key, value, expiration, null);
 
