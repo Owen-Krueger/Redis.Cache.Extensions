@@ -15,6 +15,13 @@ public static class WebApplicationBuilderExtensions
     /// </summary>
     public static void AddRedisCache(this WebApplicationBuilder builder) => 
         builder.Services.AddTransient<IRedisCache, RedisCache>();
+    
+    /// <summary>
+    /// Adds a <see cref="RedisCache"/> to the service collection.
+    /// Inner <see cref="IDatabase"/> created automatically pointed at a specified host instance.
+    /// </summary>
+    public static void AddRedisCache(this WebApplicationBuilder builder, string host) => 
+        builder.Services.AddTransient<IRedisCache>(_ => new RedisCache(host));
 
     /// <summary>
     /// Adds a <see cref="RedisCache"/> to the service collection.

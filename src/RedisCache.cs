@@ -11,7 +11,13 @@ public class RedisCache(IDatabase database) : IRedisCache
     /// <summary>
     /// Instantiates a new instance of <see cref="RedisCache"/> with a localhost Redis database.
     /// </summary>
-    public RedisCache() : this(ConfigureLocalRedis()) { }
+    public RedisCache() : this("localhost") { }
+
+    /// <summary>
+    /// Instantiates a new instance of <see cref="RedisCache"/> with a specified host for the Redis database.
+    /// </summary>
+    /// <param name="host"></param>
+    public RedisCache(string host) : this(ConfigureLocalRedis(host)) { }
 
     /// <inheritdoc />
     public IDatabase Database => database;
@@ -19,9 +25,9 @@ public class RedisCache(IDatabase database) : IRedisCache
     /// <summary>
     /// Set up Redis database using localhost instance of Redis Sidecar.
     /// </summary>
-    private static IDatabase ConfigureLocalRedis()
+    private static IDatabase ConfigureLocalRedis(string host)
     {
-        var redis = ConnectionMultiplexer.Connect("localhost");
+        var redis = ConnectionMultiplexer.Connect(host);
         return redis.GetDatabase();
     }
 

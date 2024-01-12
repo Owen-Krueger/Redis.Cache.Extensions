@@ -1,7 +1,7 @@
-# Redis.Cache.Extensions
+# Redis.Sidecar.Cache
 [![.NET](https://github.com/Owen-Krueger/Redis.Sidecar.Cache/actions/workflows/dotnet.yml/badge.svg)](https://github.com/Owen-Krueger/Redis.Sidecar.Cache/actions/workflows/dotnet.yml)
 
-Redis.Cache.Extensions is a package used to easily set up and use Redis Sidecar caches within your application using the `StackExchange.Redis` package.
+Redis.Sidecar.Cache is a package used to easily set up and use Redis caches within your application using the `StackExchange.Redis` package. Unlike the name of the package, you can use any Redis cache, not just a Sidecar cache, even though a Sidecar cache is what will be used by default.
 
 A variety of methods are available to easily set up and utilize a cache within your application.
 
@@ -108,11 +108,13 @@ This class provides extensions for `WebApplicationBuilder` to automatically set 
 
 By default, the `RedisCache` will attempt to find the Redis Sidecar container running on localhost.
 
-An overload is provided where an `IDatabase` can be supplied if you set up the redis connection yourself.
+Overloads are provided to provide an `IDatabase` or a specific host to set up the redis connection yourself.
 
 Examples:
 ``` C#
 webApplicationBuilder.AddRedisCache(); // Default
 
 webApplicationBuilder.AddRedisCache(myDatabase); // `IDatabase` instance provided.
+
+webApplicationBuilder.AddRedisCache("myhost"); // Host provided.
 ```

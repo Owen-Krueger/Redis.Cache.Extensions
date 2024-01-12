@@ -1,3 +1,10 @@
+# 1.2.0 (2024-01-12)
+## Features
+- Added ability to specify host instead of setting up an `IDatabase` manually.
+
+## Misc
+- Clarify documentation that this package can be used with non-Sidecar caches.
+
 # 1.1.1 (2024-01-11)
 ## Misc
 - Clean up existing comments and add missing tags.

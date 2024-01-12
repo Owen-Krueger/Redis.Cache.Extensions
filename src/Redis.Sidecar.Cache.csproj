@@ -5,11 +5,11 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <LangVersion>latest</LangVersion>
-        <Version>1.1.1</Version>
+        <Version>1.2.0</Version>
         <Title>Redis Sidecar Cache</Title>
         <Authors>Owen Krueger</Authors>
         <RootNamespace>Redis.Sidecar.Cache</RootNamespace>
-        <Description>Extensions for managing a Redis sidecar cache.</Description>
+        <Description>Extensions for managing a Redis cache.</Description>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageProjectUrl>https://github.com/Owen-Krueger/Redis.Sidecar.Cache</PackageProjectUrl>
         <PackageReadmeFile>README.md</PackageReadmeFile>
@@ -17,7 +17,7 @@
         <PackageTags>Redis;Sidecar;Cache;StackExchange.Redis</PackageTags>
         <RepositoryUrl>https://github.com/Owen-Krueger/Redis.Sidecar.Cache</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-        <PackageReleaseNotes>https://github.com/Owen-Krueger/Redis.Sidecar.Cache/releases/tag/v1.1.1</PackageReleaseNotes>
+        <PackageReleaseNotes>https://github.com/Owen-Krueger/Redis.Sidecar.Cache/releases/tag/v1.2.0</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
