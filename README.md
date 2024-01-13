@@ -117,4 +117,6 @@ webApplicationBuilder.AddRedisCache(); // Default
 webApplicationBuilder.AddRedisCache(myDatabase); // `IDatabase` instance provided.
 
 webApplicationBuilder.AddRedisCache("myhost"); // Host provided.
+
+webApplicationBuilder.AddRedisCache(new ConfigurationOptions()); // Options provided.
 ```
