@@ -1,3 +1,7 @@
+# 1.3.0 (2024-01-12)
+## Features
+- Added ability to specify configuration settings during instantiation of `RedisCache`
+
 # 1.2.0 (2024-01-12)
 ## Features
 - Added ability to specify host instead of setting up an `IDatabase` manually.

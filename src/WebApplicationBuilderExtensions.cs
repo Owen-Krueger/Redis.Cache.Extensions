@@ -25,6 +25,13 @@ public static class WebApplicationBuilderExtensions
 
     /// <summary>
     /// Adds a <see cref="RedisCache"/> to the service collection.
+    /// Inner <see cref="IDatabase"/> created with provided options.
+    /// </summary>
+    public static void AddRedisCache(this WebApplicationBuilder builder, ConfigurationOptions options) =>
+        builder.Services.AddTransient<IRedisCache>(_ => new RedisCache(options));
+    
+    /// <summary>
+    /// Adds a <see cref="RedisCache"/> to the service collection.
     /// Inner <see cref="IDatabase"/> provided as a parameter.
     /// </summary>
     public static void AddRedisCache(this WebApplicationBuilder builder, IDatabase database) =>
