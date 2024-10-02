@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 using StackExchange.Redis;
 
 namespace Redis.Sidecar.Cache;
@@ -38,7 +39,7 @@ public class RedisCache(IDatabase database) : IRedisCache
         var redisValue = database.StringGet(key);
         if (redisValue.HasValue)
         {
-            return JsonConvert.DeserializeObject<T>(redisValue!);
+            return GetFromJson<T>(redisValue!);
         }
 
         if (function is null)
@@ -65,7 +66,7 @@ public class RedisCache(IDatabase database) : IRedisCache
         var redisValue = await database.StringGetAsync(key);
         if (redisValue.HasValue)
         {
-            return JsonConvert.DeserializeObject<T>(redisValue!);
+            return GetFromJson<T>(redisValue!);
         }
 
         if (function is null)
@@ -128,4 +129,15 @@ public class RedisCache(IDatabase database) : IRedisCache
 
     /// <inheritdoc />
     public async Task<bool> DeleteAsync(string key) => (await database.StringGetDeleteAsync(key)).HasValue;
+
+    private static T? GetFromJson<T>(string json)
+    {
+        // A string is considered escaped if it contains a backslash and is not a JSON object because it doesn't start and end with curly brackets.
+        if (!Regex.IsMatch(json, "^{.*}$") && Regex.IsMatch(json, @"\\"))
+        {
+            json = JsonConvert.DeserializeObject<string>(json) ?? throw new JsonException("Failed to deserialize escaped JSON string.");
+        }
+
+        return JsonConvert.DeserializeObject<T>(json);
+    }
 }

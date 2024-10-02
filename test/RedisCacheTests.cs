@@ -23,6 +23,21 @@ public class RedisCacheTests
     }
 
     [Test]
+    public void Get_ValueFound_ValueReturned()
+    {
+        var mock = new AutoMocker();
+        var databaseMock = mock.GetMock<IDatabase>();
+        databaseMock.Setup(x => x.StringGet(Key, CommandFlags.None)).Returns(Value);
+        var functionMock = new Mock<Func<int>>();
+        var service = mock.CreateInstance<RedisCache>();
+
+        var response = service.Get(Key, functionMock.Object);
+        Assert.That(response, Is.EqualTo(Value));
+        databaseMock.Verify(x => x.StringSet(Key, It.IsAny<RedisValue>(), redisCacheMinutes, false, When.Always, CommandFlags.None), Times.Never);
+        functionMock.Verify(x => x.Invoke(), Times.Never);
+    }
+
+    [Test]
     public void Get_ValueNotFound_FunctionCalled()
     {
         var mock = new AutoMocker();
