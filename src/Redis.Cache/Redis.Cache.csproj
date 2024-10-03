@@ -1,37 +1,37 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <LangVersion>latest</LangVersion>
-        <Version>1.3.0</Version>
-        <Title>Redis Sidecar Cache</Title>
+        <Version>2.0.0</Version>
+        <Title>Redis Cache</Title>
         <Authors>Owen Krueger</Authors>
-        <RootNamespace>Redis.Sidecar.Cache</RootNamespace>
+        <RootNamespace>Redis.Cache</RootNamespace>
         <Description>Extensions for managing a Redis cache.</Description>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageProjectUrl>https://github.com/Owen-Krueger/Redis.Sidecar.Cache</PackageProjectUrl>
+        <PackageProjectUrl>https://github.com/Owen-Krueger/Redis.Cache</PackageProjectUrl>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <PackageTags>Redis;Sidecar;Cache;StackExchange.Redis</PackageTags>
-        <RepositoryUrl>https://github.com/Owen-Krueger/Redis.Sidecar.Cache</RepositoryUrl>
+        <RepositoryUrl>https://github.com/Owen-Krueger/Redis.Cache</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-        <PackageReleaseNotes>https://github.com/Owen-Krueger/Redis.Sidecar.Cache/releases/tag/v1.3.0</PackageReleaseNotes>
+        <PackageReleaseNotes>https://github.com/Owen-Krueger/Redis.Cache/releases/tag/v2.0.0</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
       <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-      <PackageReference Include="StackExchange.Redis" Version="2.7.10" />
-      <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+      <PackageReference Include="StackExchange.Redis" Version="2.8.16" />
     </ItemGroup>
 
     <ItemGroup>
-        <None Include="..\LICENSE">
+        <None Include="..\..\LICENSE">
             <Pack>True</Pack>
             <PackagePath>\</PackagePath>
         </None>
-        <None Include="..\README.md">
+        <None Include="..\..\README.md">
             <Pack>True</Pack>
             <PackagePath>\</PackagePath>
         </None>

@@ -13,7 +13,7 @@ jobs:
 
     env:
       BUILD_CONFIG: 'Release'
-      SOLUTION: 'Redis.Sidecar.Cache.sln'
+      SOLUTION: 'Redis.Cache.sln'
 
     runs-on: ubuntu-latest
 
@@ -34,10 +34,10 @@ jobs:
       - name: Restore dependencies
         run: nuget restore $SOLUTION
 
-      - name: Setup .NET 6.0
+      - name: Setup .NET 8.0
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 6.0.x
+          dotnet-version: 8.0.x
 
       - name: Restore dependencies
         run: dotnet restore $SOLUTION

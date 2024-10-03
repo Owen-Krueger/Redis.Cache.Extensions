@@ -1,9 +1,9 @@
-# Redis.Sidecar.Cache
+# Redis.Cache
 [![.NET](https://github.com/Owen-Krueger/Redis.Sidecar.Cache/actions/workflows/dotnet.yml/badge.svg)](https://github.com/Owen-Krueger/Redis.Sidecar.Cache/actions/workflows/dotnet.yml)
 
-Redis.Sidecar.Cache is a package used to easily set up and use Redis caches within your application using the `StackExchange.Redis` package. Unlike the name of the package, you can use any Redis cache, not just a Sidecar cache, even though a Sidecar cache is what will be used by default.
+Redis.Cache is a package used to easily set up and use Redis caches within your application using the `StackExchange.Redis` package. You can use any Redis cache, including Sidecar caches, which is what will be used by default.
 
-A variety of methods are available to easily set up and utilize a cache within your application.
+There are two packages available that contain a variety of methods are available to easily set up and utilize a cache within your application.
 
 ## RedisCache
 
@@ -102,9 +102,9 @@ var deleted = redisCache.Delete("KeyName");
 var deleted = await redisCache.DeleteAsync("KeyName");
 ```
 
-## WebApplicationBuilder Extensions
+## ServiceCollection Extensions
 
-This class provides extensions for `WebApplicationBuilder` to automatically set up and register a `RedisCache` instance for your application to use.
+This class provides extensions for `ServiceCollection` to automatically set up and register a `RedisCache` instance for your application to use.
 
 By default, the `RedisCache` will attempt to find the Redis Sidecar container running on localhost.
 
@@ -112,11 +112,46 @@ Overloads are provided to provide an `IDatabase` or a specific host to set up th
 
 Examples:
 ``` C#
-webApplicationBuilder.AddRedisCache(); // Default
+services.AddRedisCache(); // Default
 
-webApplicationBuilder.AddRedisCache(myDatabase); // `IDatabase` instance provided.
+services.AddRedisCache(myDatabase); // `IDatabase` instance provided.
 
-webApplicationBuilder.AddRedisCache("myhost"); // Host provided.
+services.AddRedisCache("myhost"); // Host provided.
 
-webApplicationBuilder.AddRedisCache(new ConfigurationOptions()); // Options provided.
+services.AddRedisCache(new ConfigurationOptions()); // Options provided.
+```
+
+## Redis.Cache.Testing
+
+A `Redis.Cache.Testing` package is available to assist with unit testing Redis caches.
+
+### Available Methods
+
+The methods available to be used are `SetupRedisGet`/`SetupRedisGetAsync` and `ReturnFromInnerFunction`
+
+### SetupRedisGet/SetupRedisGetAsync
+
+This method specifies a setup on an `IRedisCache` mock for a call to the `Get` method.
+
+A key string can optionally be provided. If provided, the setup will be for calls to `Get`/`GetAsync` for the provided key. If not provided, the setup will be for calls to `Get`/`GetAsync` for any provided key.
+
+Examples:
+``` C#
+var redisMock = new Mock<IRedisCache>();
+
+redisMock.SetupRedisGet<bool>("Key").Returns(true); // For setting up against `Get` method.
+redisMock.SetupRedisGet<bool>().Returns(true); // Omitting a key sets up the mock against any key provided.
+redisMock.SetupRedisGetAsync<bool>("Key").ReturnsAsync(true); // For setting up against `GetAsync` method.
+redisMock.SetupRedisGetAsync<bool>().ReturnsAsync(true); // Omitting a key sets up the mock against any key provided.
+```
+
+### ReturnFromInnerFunction
+
+This method specifies that the inner function in the `IRedisCache` mock's `Get`/`GetAsync` method will be invoked to return the value.
+
+Examples:
+``` C#
+var redisMock = new Mock<IRedisCache>();
+
+redisMock.SetupRedisGet<bool>("Key").ReturnsFromInnerFunction(); // Can be used on both `Get` and `GetAsync` calls.
 ```
