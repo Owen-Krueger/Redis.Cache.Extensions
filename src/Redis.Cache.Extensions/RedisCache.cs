@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using StackExchange.Redis;
 
-namespace Redis.Cache;
+namespace Redis.Cache.Extensions;
 
 /// <inheritdoc />
 public class RedisCache(IDatabase database) : IRedisCache

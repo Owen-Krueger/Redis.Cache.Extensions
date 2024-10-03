@@ -1,7 +1,7 @@
-# Redis.Cache
+# Redis.Cache.Extensions
 [![.NET](https://github.com/Owen-Krueger/Redis.Sidecar.Cache/actions/workflows/dotnet.yml/badge.svg)](https://github.com/Owen-Krueger/Redis.Sidecar.Cache/actions/workflows/dotnet.yml)
 
-Redis.Cache is a package used to easily set up and use Redis caches within your application using the `StackExchange.Redis` package. You can use any Redis cache, including Sidecar caches, which is what will be used by default.
+Redis.Cache.Extensions is a package used to easily set up and use Redis caches within your application using the `StackExchange.Redis` package. You can use any Redis cache, including Sidecar caches, which is what will be used by default.
 
 There are two packages available that contain a variety of methods are available to easily set up and utilize a cache within your application.
 
@@ -121,9 +121,9 @@ services.AddRedisCache("myhost"); // Host provided.
 services.AddRedisCache(new ConfigurationOptions()); // Options provided.
 ```
 
-## Redis.Cache.Testing
+## Redis.Cache.Extensions.Testing
 
-A `Redis.Cache.Testing` package is available to assist with unit testing Redis caches.
+A `Redis.Cache.Extensions.Testing` package is available to assist with unit testing Redis caches.
 
 ### Available Methods
 

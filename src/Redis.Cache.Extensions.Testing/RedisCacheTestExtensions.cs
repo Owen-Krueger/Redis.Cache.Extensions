@@ -2,7 +2,7 @@
 using Moq.Language.Flow;
 // ReSharper disable InvalidXmlDocComment
 
-namespace Redis.Cache.Testing;
+namespace Redis.Cache.Extensions.Testing;
 
 /// <summary>
 /// Extensions for <see cref="IRedisCache"/> mocks that can be utilized in tests.

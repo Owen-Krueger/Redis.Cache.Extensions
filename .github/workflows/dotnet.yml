@@ -13,7 +13,7 @@ jobs:
 
     env:
       BUILD_CONFIG: 'Release'
-      SOLUTION: 'Redis.Cache.sln'
+      SOLUTION: 'Redis.Cache.Extensions.sln'
 
     runs-on: ubuntu-latest
 

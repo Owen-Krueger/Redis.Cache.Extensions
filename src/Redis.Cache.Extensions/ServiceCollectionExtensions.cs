@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
 
-namespace Redis.Cache;
+namespace Redis.Cache.Extensions;
 
 /// <summary>
 /// Extension methods for <see cref="ServiceCollection"/>.

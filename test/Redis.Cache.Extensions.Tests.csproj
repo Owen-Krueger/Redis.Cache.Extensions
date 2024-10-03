@@ -7,7 +7,7 @@
 
         <IsPackable>false</IsPackable>
         <IsTestProject>true</IsTestProject>
-        <RootNamespace>Redis.Cache.Tests</RootNamespace>
+        <RootNamespace>Redis.Cache.Extensions.Tests</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -26,7 +26,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\src\Redis.Cache.Testing\Redis.Cache.Testing.csproj" />
+      <ProjectReference Include="..\src\Redis.Cache.Extensions.Testing\Redis.Cache.Extensions.Testing.csproj" />
     </ItemGroup>
 
 </Project>

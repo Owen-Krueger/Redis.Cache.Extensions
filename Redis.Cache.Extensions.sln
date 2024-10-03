@@ -4,7 +4,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A3AC27D3-5CE
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{3556EF7E-BE3A-44BF-AF12-2F8140571052}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Redis.Cache.Tests", "test\Redis.Cache.Tests.csproj", "{7553AC74-B724-4BBE-8177-C25078C2D2E0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Redis.Cache.Extensions.Tests", "test\Redis.Cache.Extensions.Tests.csproj", "{7553AC74-B724-4BBE-8177-C25078C2D2E0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4D92486D-D27A-4AB0-88C1-31566A7E777C}"
 	ProjectSection(SolutionItems) = preProject
@@ -14,9 +14,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		CHANGELOG.md = CHANGELOG.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Redis.Cache", "src\Redis.Cache\Redis.Cache.csproj", "{BEF40558-45A7-4890-8035-EECEB3132BD7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Redis.Cache.Extensions", "src\Redis.Cache.Extensions\Redis.Cache.Extensions.csproj", "{BEF40558-45A7-4890-8035-EECEB3132BD7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Redis.Cache.Testing", "src\Redis.Cache.Testing\Redis.Cache.Testing.csproj", "{0398E8A2-90F5-4F17-BF37-267F623C04A1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Redis.Cache.Extensions.Testing", "src\Redis.Cache.Extensions.Testing\Redis.Cache.Extensions.Testing.csproj", "{0398E8A2-90F5-4F17-BF37-267F623C04A1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{80B4056D-58ED-4005-B399-780405E85C35}"
 	ProjectSection(SolutionItems) = preProject

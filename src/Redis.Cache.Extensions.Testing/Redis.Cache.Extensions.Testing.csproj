@@ -4,26 +4,27 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <LangVersion>latest</LangVersion>
+        <RootNamespace>Redis.Cache.Extensions.Testing</RootNamespace>
         <Version>2.0.0</Version>
-        <Title>Redis Cache</Title>
+        <Title>Redis Cache Extensions Testing</Title>
         <Authors>Owen Krueger</Authors>
-        <RootNamespace>Redis.Cache</RootNamespace>
-        <Description>Extensions for managing a Redis cache.</Description>
+        <Description>Extensions for unit testing Redis cache extensions.</Description>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageProjectUrl>https://github.com/Owen-Krueger/Redis.Cache</PackageProjectUrl>
+        <PackageProjectUrl>https://github.com/Owen-Krueger/Redis.Cache.Extensions</PackageProjectUrl>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
-        <PackageTags>Redis;Sidecar;Cache;StackExchange.Redis</PackageTags>
-        <RepositoryUrl>https://github.com/Owen-Krueger/Redis.Cache</RepositoryUrl>
+        <PackageTags>Redis;Sidecar;Cache;StackExchange.Redis;Testing;UnitTesting;Moq</PackageTags>
+        <RepositoryUrl>https://github.com/Owen-Krueger/Redis.Cache.Extensions</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-        <PackageReleaseNotes>https://github.com/Owen-Krueger/Redis.Cache/releases/tag/v2.0.0</PackageReleaseNotes>
+        <PackageReleaseNotes>https://github.com/Owen-Krueger/Redis.Cache.Extensions/releases/tag/v2.0.0</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
-      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-      <PackageReference Include="StackExchange.Redis" Version="2.8.16" />
+      <ProjectReference Include="..\Redis.Cache.Extensions\Redis.Cache.Extensions.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Moq" Version="4.20.72" />
     </ItemGroup>
 
     <ItemGroup>
@@ -36,5 +37,5 @@
             <PackagePath>\</PackagePath>
         </None>
     </ItemGroup>
-    
+
 </Project>

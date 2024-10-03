@@ -3,7 +3,7 @@ using Moq.AutoMock;
 using Newtonsoft.Json;
 using StackExchange.Redis;
 
-namespace Redis.Cache.Tests;
+namespace Redis.Cache.Extensions.Tests;
 
 public class RedisCacheTests
 {

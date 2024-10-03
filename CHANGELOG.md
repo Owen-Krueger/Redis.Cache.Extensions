@@ -1,10 +1,10 @@
 # 2.0.0 (2024-10-03)
 ## Features
 - Added .NET 8.0 support.
-- Added `Redis.Cache.Testing` package for testing extensions.
+- Added `Redis.Cache.Extensions.Testing` package for testing extensions.
 
 ## Breaking Changes
-- Renamed package to `Redis.Cache` from `Redis.Sidecar.Cache`.
+- Renamed package to `Redis.Cache.Extensions` from `Redis.Sidecar.Cache`.
 - Dropped support for .NET 6.0.
 - Swapped extensions for `WebApplicationBuilder` for extensions for `ServiceCollection`.
 

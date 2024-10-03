@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using StackExchange.Redis;
 
-namespace Redis.Cache;
+namespace Redis.Cache.Extensions;
 
 /// <summary>
 /// For interacting with a Redis cache.

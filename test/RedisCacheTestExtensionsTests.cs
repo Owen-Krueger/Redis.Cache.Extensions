@@ -1,8 +1,8 @@
 ﻿using Moq;
 using Moq.AutoMock;
-using Redis.Cache.Testing;
+using Redis.Cache.Extensions.Testing;
 
-namespace Redis.Cache.Tests;
+namespace Redis.Cache.Extensions.Tests;
 
 public class RedisCacheTestExtensionsTests
 {
