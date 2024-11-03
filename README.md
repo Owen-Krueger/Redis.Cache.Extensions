@@ -121,6 +121,28 @@ services.AddRedisCache("myhost"); // Host provided.
 services.AddRedisCache(new ConfigurationOptions()); // Options provided.
 ```
 
+## Health Checks
+
+The `Redis.Cache.Extensions` package provides a health check for the Redis cache. This health check can be added to the application's health checks to ensure that the cache is available.
+
+The health check can be utilized manually or added to an existing `IHealthChecksBuilder` instance with the `AddRedisHealthCheck` extension method.
+
+``` C# 
+// Manual
+var healthCheck = new RedisHealthCheck(serviceProvider);
+var health = await healthCheck.CheckHealthAsync(new HealthCheckContext());
+
+// Builder
+var appBuilder = WebApplication.CreateBuilder(args);
+appBuilder.Services.AddHealthChecks().AddRedisHealthCheck(tags: ["redis"]);
+
+var app = appBuilder.Build();
+app.MapHealthChecks("/redis", new HealthCheckOptions
+{
+    Predicate = check => check.Tags.Contains("redis")
+});
+```
+
 ## Redis.Cache.Extensions.Testing
 
 A `Redis.Cache.Extensions.Testing` package is available to assist with unit testing Redis caches.

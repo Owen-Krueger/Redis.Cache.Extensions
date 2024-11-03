@@ -1,3 +1,7 @@
+# 2.1.0 (2024-11-03)
+## Features
+- Added health check and health check extensions.
+
 # 2.0.0 (2024-10-03)
 ## Features
 - Added .NET 8.0 support.
