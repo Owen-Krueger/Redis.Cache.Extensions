@@ -13,6 +13,9 @@ public class RedisCacheTests
         var mock = new AutoMocker();
         var databaseMock = mock.GetMock<IDatabase>();
         databaseMock.Setup(x => x.StringGet(Key, CommandFlags.None)).Returns(Value);
+        mock.GetMock<IConnectionMultiplexer>()
+            .Setup(x => x.GetDatabase(-1, null))
+            .Returns(databaseMock.Object);
         var functionMock = new Mock<Func<int>>();
         var service = mock.CreateInstance<RedisCache>();
 
@@ -28,6 +31,9 @@ public class RedisCacheTests
         var mock = new AutoMocker();
         var databaseMock = mock.GetMock<IDatabase>();
         databaseMock.Setup(x => x.StringGet(Key, CommandFlags.None)).Returns(new RedisValue());
+        mock.GetMock<IConnectionMultiplexer>()
+            .Setup(x => x.GetDatabase(-1, null))
+            .Returns(databaseMock.Object);
         var functionMock = new Mock<Func<int>>();
         functionMock.Setup(x => x.Invoke()).Returns(Value);
         var service = mock.CreateInstance<RedisCache>();
@@ -43,6 +49,9 @@ public class RedisCacheTests
         var mock = new AutoMocker();
         var databaseMock = mock.GetMock<IDatabase>();
         databaseMock.Setup(x => x.StringGet(Key, CommandFlags.None)).Returns(new RedisValue());
+        mock.GetMock<IConnectionMultiplexer>()
+            .Setup(x => x.GetDatabase(-1, null))
+            .Returns(databaseMock.Object);
         var functionMock = new Mock<Func<int>>();
         functionMock.Setup(x => x.Invoke()).Returns(Value);
         var service = mock.CreateInstance<RedisCache>();
@@ -58,6 +67,9 @@ public class RedisCacheTests
         var mock = new AutoMocker();
         var databaseMock = mock.GetMock<IDatabase>();
         databaseMock.Setup(x => x.StringGet(Key, CommandFlags.None)).Returns(new RedisValue());
+        mock.GetMock<IConnectionMultiplexer>()
+            .Setup(x => x.GetDatabase(-1, null))
+            .Returns(databaseMock.Object);
         var functionMock = new Mock<Func<int?>>();
         functionMock.Setup(x => x.Invoke()).Returns((int?)null);
         var service = mock.CreateInstance<RedisCache>();
@@ -75,6 +87,9 @@ public class RedisCacheTests
         databaseMock
             .Setup(x => x.StringGet(Key, CommandFlags.None))
             .Returns(new RedisValue());
+        mock.GetMock<IConnectionMultiplexer>()
+            .Setup(x => x.GetDatabase(-1, null))
+            .Returns(databaseMock.Object);
         var service = mock.CreateInstance<RedisCache>();
 
         var response = service.Get<object>(Key);
@@ -90,6 +105,9 @@ public class RedisCacheTests
         databaseMock
             .Setup(x => x.StringGet(Key, CommandFlags.None))
             .Returns(new RedisValue());
+        mock.GetMock<IConnectionMultiplexer>()
+            .Setup(x => x.GetDatabase(-1, null))
+            .Returns(databaseMock.Object);
         var functionMock = new Mock<Func<int>>();
         functionMock.Setup(x => x.Invoke()).Returns(Value);
         databaseMock
@@ -109,6 +127,9 @@ public class RedisCacheTests
         databaseMock
             .Setup(x => x.StringGet(Key, CommandFlags.None))
             .Returns(new RedisValue());
+        mock.GetMock<IConnectionMultiplexer>()
+            .Setup(x => x.GetDatabase(-1, null))
+            .Returns(databaseMock.Object);
         var functionMock = new Mock<Func<int>>();
         functionMock
             .Setup(x => x.Invoke())
@@ -130,6 +151,9 @@ public class RedisCacheTests
         databaseMock
             .Setup(x => x.StringGet(Key, CommandFlags.None))
             .Returns(new RedisValue());
+        mock.GetMock<IConnectionMultiplexer>()
+            .Setup(x => x.GetDatabase(-1, null))
+            .Returns(databaseMock.Object);
         var functionMock = new Mock<Func<int>>();
         functionMock
             .Setup(x => x.Invoke())
@@ -149,6 +173,9 @@ public class RedisCacheTests
         var mock = new AutoMocker();
         var databaseMock = mock.GetMock<IDatabase>();
         databaseMock.Setup(x => x.StringGet(Key, CommandFlags.None)).Returns("BAD JSON PAYLOAD");
+        mock.GetMock<IConnectionMultiplexer>()
+            .Setup(x => x.GetDatabase(-1, null))
+            .Returns(databaseMock.Object);
         var service = mock.CreateInstance<RedisCache>();
 
         Assert.Throws<JsonReaderException>(() => service.Get<int>(Key));
@@ -162,6 +189,9 @@ public class RedisCacheTests
         databaseMock
             .Setup(x => x.StringGetAsync(Key, CommandFlags.None))
             .ReturnsAsync(Value);
+        mock.GetMock<IConnectionMultiplexer>()
+            .Setup(x => x.GetDatabase(-1, null))
+            .Returns(databaseMock.Object);
         var functionMock = new Mock<Func<Task<int>>>();
         var service = mock.CreateInstance<RedisCache>();
 
@@ -179,6 +209,9 @@ public class RedisCacheTests
         databaseMock
             .Setup(x => x.StringGetAsync(Key, CommandFlags.None))
             .ReturnsAsync(new RedisValue());
+        mock.GetMock<IConnectionMultiplexer>()
+            .Setup(x => x.GetDatabase(-1, null))
+            .Returns(databaseMock.Object);
         var functionMock = new Mock<Func<Task<int>>>();
         functionMock.Setup(x => x.Invoke()).ReturnsAsync(Value);
         var service = mock.CreateInstance<RedisCache>();
@@ -196,6 +229,9 @@ public class RedisCacheTests
         databaseMock
             .Setup(x => x.StringGetAsync(Key, CommandFlags.None))
             .ReturnsAsync(new RedisValue());
+        mock.GetMock<IConnectionMultiplexer>()
+            .Setup(x => x.GetDatabase(-1, null))
+            .Returns(databaseMock.Object);
         var functionMock = new Mock<Func<Task<int>>>();
         functionMock.Setup(x => x.Invoke()).ReturnsAsync(Value);
         var service = mock.CreateInstance<RedisCache>();
@@ -213,6 +249,9 @@ public class RedisCacheTests
         databaseMock
             .Setup(x => x.StringGetAsync(Key, CommandFlags.None))
             .ReturnsAsync(new RedisValue());
+        mock.GetMock<IConnectionMultiplexer>()
+            .Setup(x => x.GetDatabase(-1, null))
+            .Returns(databaseMock.Object);
         var functionMock = new Mock<Func<Task<int?>>>();
         functionMock.Setup(x => x.Invoke()).ReturnsAsync((int?)null);
         var service = mock.CreateInstance<RedisCache>();
@@ -230,6 +269,9 @@ public class RedisCacheTests
         databaseMock
             .Setup(x => x.StringGetAsync(Key, CommandFlags.None))
             .ReturnsAsync(new RedisValue());
+        mock.GetMock<IConnectionMultiplexer>()
+            .Setup(x => x.GetDatabase(-1, null))
+            .Returns(databaseMock.Object);
         var service = mock.CreateInstance<RedisCache>();
 
         var response = await service.GetAsync<object>(Key);
@@ -250,6 +292,9 @@ public class RedisCacheTests
         databaseMock
             .Setup(x => x.StringSetAsync(Key, It.IsAny<RedisValue>(), redisCacheMinutes, false, When.Always, CommandFlags.None))
             .ReturnsAsync(false);
+        mock.GetMock<IConnectionMultiplexer>()
+            .Setup(x => x.GetDatabase(-1, null))
+            .Returns(databaseMock.Object);
         var service = mock.CreateInstance<RedisCache>();
 
         var response = await service.GetAsync(Key, functionMock.Object);
@@ -268,6 +313,9 @@ public class RedisCacheTests
         functionMock
             .Setup(x => x.Invoke())
             .ReturnsAsync(Value);
+        mock.GetMock<IConnectionMultiplexer>()
+            .Setup(x => x.GetDatabase(-1, null))
+            .Returns(databaseMock.Object);
         var service = mock.CreateInstance<RedisCache>();
 
         var response = await service.GetAsync(Key, functionMock.Object, _ => true);
@@ -285,6 +333,9 @@ public class RedisCacheTests
         databaseMock
             .Setup(x => x.StringGetAsync(Key, CommandFlags.None))
             .ReturnsAsync(new RedisValue());
+        mock.GetMock<IConnectionMultiplexer>()
+            .Setup(x => x.GetDatabase(-1, null))
+            .Returns(databaseMock.Object);
         var functionMock = new Mock<Func<Task<int>>>();
         functionMock
             .Setup(x => x.Invoke())
@@ -306,6 +357,9 @@ public class RedisCacheTests
         databaseMock
             .Setup(x => x.StringGetAsync(Key, CommandFlags.None))
             .ReturnsAsync("BAD JSON PAYLOAD");
+        mock.GetMock<IConnectionMultiplexer>()
+            .Setup(x => x.GetDatabase(-1, null))
+            .Returns(databaseMock.Object);
         var service = mock.CreateInstance<RedisCache>();
 
         Assert.ThrowsAsync<JsonReaderException>(() => service.GetAsync<int>(Key));
@@ -319,6 +373,9 @@ public class RedisCacheTests
         databaseMock
             .Setup(x => x.StringSet(Key, Value.ToString(), redisCacheMinutes, false, When.Always, CommandFlags.None))
             .Returns(true);
+        mock.GetMock<IConnectionMultiplexer>()
+            .Setup(x => x.GetDatabase(-1, null))
+            .Returns(databaseMock.Object);
         var service = mock.CreateInstance<RedisCache>();
 
         var response = service.Set(Key, Value, redisCacheMinutes);
@@ -333,6 +390,9 @@ public class RedisCacheTests
         databaseMock
             .Setup(x => x.StringSet(Key, Value.ToString(), TimeSpan.FromMinutes(60), false, When.Always, CommandFlags.None))
             .Returns(false);
+        mock.GetMock<IConnectionMultiplexer>()
+            .Setup(x => x.GetDatabase(-1, null))
+            .Returns(databaseMock.Object);
         var service = mock.CreateInstance<RedisCache>();
 
         var response = service.Set(Key, Value);
@@ -348,6 +408,9 @@ public class RedisCacheTests
             .Setup(x =>
                 x.StringSet(Key, Value.ToString(), TimeSpan.FromMinutes(60), false, When.Always, CommandFlags.None))
             .Returns(true);
+        mock.GetMock<IConnectionMultiplexer>()
+            .Setup(x => x.GetDatabase(-1, null))
+            .Returns(databaseMock.Object);
         var service = mock.CreateInstance<RedisCache>();
 
         var response = service.Set(Key, Value, _ => true);
@@ -359,6 +422,9 @@ public class RedisCacheTests
     {
         var mock = new AutoMocker();
         var databaseMock = mock.GetMock<IDatabase>();
+        mock.GetMock<IConnectionMultiplexer>()
+            .Setup(x => x.GetDatabase(-1, null))
+            .Returns(databaseMock.Object);
         var service = mock.CreateInstance<RedisCache>();
 
         var response = service.Set(Key, Value, _ => false);
@@ -376,6 +442,9 @@ public class RedisCacheTests
         databaseMock
             .Setup(x => x.StringSetAsync(Key, Value.ToString(), redisCacheMinutes, false, When.Always, CommandFlags.None))
             .ReturnsAsync(true);
+        mock.GetMock<IConnectionMultiplexer>()
+            .Setup(x => x.GetDatabase(-1, null))
+            .Returns(databaseMock.Object);
         var service = mock.CreateInstance<RedisCache>();
 
         var response = await service.SetAsync(Key, Value, redisCacheMinutes);
@@ -390,6 +459,9 @@ public class RedisCacheTests
         databaseMock
             .Setup(x => x.StringSetAsync(Key, Value.ToString(), TimeSpan.FromMinutes(60), false, When.Always, CommandFlags.None))
             .ReturnsAsync(false);
+        mock.GetMock<IConnectionMultiplexer>()
+            .Setup(x => x.GetDatabase(-1, null))
+            .Returns(databaseMock.Object);
         var service = mock.CreateInstance<RedisCache>();
 
         var response = await service.SetAsync(Key, Value);
@@ -405,6 +477,9 @@ public class RedisCacheTests
             .Setup(x =>
                 x.StringSetAsync(Key, Value.ToString(), TimeSpan.FromMinutes(60), false, When.Always, CommandFlags.None))
             .ReturnsAsync(true);
+        mock.GetMock<IConnectionMultiplexer>()
+            .Setup(x => x.GetDatabase(-1, null))
+            .Returns(databaseMock.Object);
         var service = mock.CreateInstance<RedisCache>();
 
         var response = await service.SetAsync(Key, Value, _ => true);
@@ -416,6 +491,9 @@ public class RedisCacheTests
     {
         var mock = new AutoMocker();
         var databaseMock = mock.GetMock<IDatabase>();
+        mock.GetMock<IConnectionMultiplexer>()
+            .Setup(x => x.GetDatabase(-1, null))
+            .Returns(databaseMock.Object);
         var service = mock.CreateInstance<RedisCache>();
 
         var response = await service.SetAsync(Key, Value, _ => false);
@@ -431,6 +509,9 @@ public class RedisCacheTests
         var mock = new AutoMocker();
         var databaseMock = mock.GetMock<IDatabase>();
         databaseMock.Setup(x => x.StringGetDelete(Key, CommandFlags.None)).Returns(Value);
+        mock.GetMock<IConnectionMultiplexer>()
+            .Setup(x => x.GetDatabase(-1, null))
+            .Returns(databaseMock.Object);
         var service = mock.CreateInstance<RedisCache>();
 
         var response = service.Delete(Key);
@@ -443,6 +524,9 @@ public class RedisCacheTests
         var mock = new AutoMocker();
         var databaseMock = mock.GetMock<IDatabase>();
         databaseMock.Setup(x => x.StringGetDelete(Key, CommandFlags.None)).Returns(new RedisValue());
+        mock.GetMock<IConnectionMultiplexer>()
+            .Setup(x => x.GetDatabase(-1, null))
+            .Returns(databaseMock.Object);
         var service = mock.CreateInstance<RedisCache>();
 
         var response = service.Delete(Key);
@@ -457,6 +541,9 @@ public class RedisCacheTests
         databaseMock
             .Setup(x => x.StringGetDeleteAsync(Key, CommandFlags.None))
             .ReturnsAsync(Value);
+        mock.GetMock<IConnectionMultiplexer>()
+            .Setup(x => x.GetDatabase(-1, null))
+            .Returns(databaseMock.Object);
         var service = mock.CreateInstance<RedisCache>();
 
         var response = await service.DeleteAsync(Key);
@@ -471,6 +558,9 @@ public class RedisCacheTests
         databaseMock
             .Setup(x => x.StringGetDeleteAsync(Key, CommandFlags.None))
             .ReturnsAsync(new RedisValue());
+        mock.GetMock<IConnectionMultiplexer>()
+            .Setup(x => x.GetDatabase(-1, null))
+            .Returns(databaseMock.Object);
         var service = mock.CreateInstance<RedisCache>();
 
         var response = await service.DeleteAsync(Key);

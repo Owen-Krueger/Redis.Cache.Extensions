@@ -9,6 +9,11 @@ namespace Redis.Cache.Extensions;
 public interface IRedisCache
 {
     /// <summary>
+    /// Gets the <see cref="IConnectionMultiplexer"/> instance to directly interact with the Redis cache.
+    /// </summary>
+    IConnectionMultiplexer ConnectionMultiplexer { get;  }
+    
+    /// <summary>
     /// Gets the <see cref="IDatabase"/> instance to directly interact with the Redis cache.
     /// </summary>
     IDatabase Database { get; }

@@ -4,7 +4,7 @@ using StackExchange.Redis;
 namespace Redis.Cache.Extensions;
 
 /// <inheritdoc />
-public class RedisCache(IDatabase database) : IRedisCache
+public class RedisCache(IConnectionMultiplexer connectionMultiplexer) : IRedisCache
 {
     private const int DefaultRedisExpirationMinutes = 60;
 
@@ -17,16 +17,19 @@ public class RedisCache(IDatabase database) : IRedisCache
     /// Instantiates a new instance of <see cref="RedisCache"/> with a specified host for the Redis database.
     /// </summary>
     /// <param name="host"></param>
-    public RedisCache(string host) : this(ConnectionMultiplexer.Connect(host).GetDatabase()) { }
+    public RedisCache(string host) : this(StackExchange.Redis.ConnectionMultiplexer.Connect(host)) { }
 
     /// <summary>
     /// Instantiates a new instance of <see cref="RedisCache"/> using the specified options for the Redis database.
     /// </summary>
     /// <param name="options"></param>
-    public RedisCache(ConfigurationOptions options) : this(ConnectionMultiplexer.Connect(options).GetDatabase()) { }
+    public RedisCache(ConfigurationOptions options) : this(StackExchange.Redis.ConnectionMultiplexer.Connect(options)) { }
+
+    /// <inheritdoc />
+    public IConnectionMultiplexer ConnectionMultiplexer => connectionMultiplexer;
     
     /// <inheritdoc />
-    public IDatabase Database => database;
+    public IDatabase Database => connectionMultiplexer.GetDatabase();
 
     /// <inheritdoc />
     public T? Get<T>(string key, Func<T> function, Func<T, bool> condition) =>
@@ -35,7 +38,7 @@ public class RedisCache(IDatabase database) : IRedisCache
     /// <inheritdoc />
     public T? Get<T>(string key, Func<T>? function = null, TimeSpan? expiration = null, Func<T, bool>? condition = null)
     {
-        var redisValue = database.StringGet(key);
+        var redisValue = Database.StringGet(key);
         if (redisValue.HasValue)
         {
             return JsonConvert.DeserializeObject<T>(redisValue!);
@@ -62,7 +65,7 @@ public class RedisCache(IDatabase database) : IRedisCache
     /// <inheritdoc />
     public async Task<T?> GetAsync<T>(string key, Func<Task<T>>? function = null, TimeSpan? expiration = null, Func<T, bool>? condition = null)
     {
-        var redisValue = await database.StringGetAsync(key);
+        var redisValue = await Database.StringGetAsync(key);
         if (redisValue.HasValue)
         {
             return JsonConvert.DeserializeObject<T>(redisValue!);
@@ -99,8 +102,7 @@ public class RedisCache(IDatabase database) : IRedisCache
         }
         
         var jsonValue = JsonConvert.SerializeObject(value);
-        return database.StringSet(key, jsonValue, expiration ?? TimeSpan.FromMinutes(DefaultRedisExpirationMinutes));
-
+        return Database.StringSet(key, jsonValue, expiration ?? TimeSpan.FromMinutes(DefaultRedisExpirationMinutes));
     }
 
     /// <inheritdoc />
@@ -120,12 +122,12 @@ public class RedisCache(IDatabase database) : IRedisCache
         }
         
         var jsonValue = JsonConvert.SerializeObject(value);
-        return await database.StringSetAsync(key, jsonValue, expiration ?? TimeSpan.FromMinutes(DefaultRedisExpirationMinutes));
+        return await Database.StringSetAsync(key, jsonValue, expiration ?? TimeSpan.FromMinutes(DefaultRedisExpirationMinutes));
     }
 
     /// <inheritdoc />
-    public bool Delete(string key) => database.StringGetDelete(key).HasValue;
+    public bool Delete(string key) => Database.StringGetDelete(key).HasValue;
 
     /// <inheritdoc />
-    public async Task<bool> DeleteAsync(string key) => (await database.StringGetDeleteAsync(key)).HasValue;
+    public async Task<bool> DeleteAsync(string key) => (await Database.StringGetDeleteAsync(key)).HasValue;
 }

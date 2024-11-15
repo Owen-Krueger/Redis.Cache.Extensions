@@ -1,3 +1,9 @@
+# 3.0.0 (2024-11-15)
+## Breaking Changes
+- Internally, `RedisCache` utilizes `IConnectionMultiplexer` instead of `IDatabase`.
+  - This allows for better performance and reliability.
+- `RedisCache` constructor taking in `IDatabase` has been replaced with one taking in an `IConnectionMultiplexer`.
+
 # 2.1.0 (2024-11-03)
 ## Features
 - Added health check and health check extensions.

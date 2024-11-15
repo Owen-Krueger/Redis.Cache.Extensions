@@ -114,7 +114,7 @@ Examples:
 ``` C#
 services.AddRedisCache(); // Default
 
-services.AddRedisCache(myDatabase); // `IDatabase` instance provided.
+services.AddRedisCache(multiplexer); // `IConnectionMultiplexer` instance provided.
 
 services.AddRedisCache("myhost"); // Host provided.
 

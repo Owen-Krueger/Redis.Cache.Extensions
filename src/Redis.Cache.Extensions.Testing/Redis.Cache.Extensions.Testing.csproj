@@ -5,7 +5,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <RootNamespace>Redis.Cache.Extensions.Testing</RootNamespace>
-        <Version>2.0.0</Version>
+        <Version>3.0.0</Version>
         <Title>Redis Cache Extensions Testing</Title>
         <Authors>Owen Krueger</Authors>
         <Description>Extensions for unit testing Redis cache extensions.</Description>
@@ -16,7 +16,7 @@
         <PackageTags>Redis;Sidecar;Cache;StackExchange.Redis;Testing;UnitTesting;Moq</PackageTags>
         <RepositoryUrl>https://github.com/Owen-Krueger/Redis.Cache.Extensions</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-        <PackageReleaseNotes>https://github.com/Owen-Krueger/Redis.Cache.Extensions/releases/tag/v2.0.0</PackageReleaseNotes>
+        <PackageReleaseNotes>https://github.com/Owen-Krueger/Redis.Cache.Extensions/releases/tag/v3.0.0</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>

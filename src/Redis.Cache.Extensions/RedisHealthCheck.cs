@@ -58,7 +58,7 @@ public class RedisHealthCheck(IServiceProvider serviceProvider) : IHealthCheck
                 return Task.FromResult(HealthCheckResult.Unhealthy("`IRedisCache` not registered with ServiceProvider."));
             }
 
-            return Task.FromResult(redisCache.Database.Multiplexer.IsConnected ?
+            return Task.FromResult(redisCache.ConnectionMultiplexer.IsConnected ?
                 HealthCheckResult.Healthy("Redis cache connected.") :
                 HealthCheckResult.Unhealthy("Redis cache not connected."));
         }
