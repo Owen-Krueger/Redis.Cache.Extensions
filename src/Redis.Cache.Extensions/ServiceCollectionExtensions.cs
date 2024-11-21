@@ -13,26 +13,26 @@ public static class ServiceCollectionExtensions
     /// Inner <see cref="IConnectionMultiplexer"/> created automatically pointed at a localhost instance.
     /// </summary>
     public static void AddRedisCache(this ServiceCollection services) => 
-        services.AddTransient<IRedisCache, RedisCache>();
+        services.AddSingleton<IRedisCache, RedisCache>();
     
     /// <summary>
     /// Adds a <see cref="RedisCache"/> to the service collection.
     /// Inner <see cref="IConnectionMultiplexer"/> created automatically pointed at a specified host instance.
     /// </summary>
     public static void AddRedisCache(this ServiceCollection services, string host) => 
-        services.AddTransient<IRedisCache>(_ => new RedisCache(host));
+        services.AddSingleton<IRedisCache>(_ => new RedisCache(host));
 
     /// <summary>
     /// Adds a <see cref="RedisCache"/> to the service collection.
     /// Inner <see cref="IConnectionMultiplexer"/> created with provided options.
     /// </summary>
     public static void AddRedisCache(this ServiceCollection services, ConfigurationOptions options) =>
-        services.AddTransient<IRedisCache>(_ => new RedisCache(options));
+        services.AddSingleton<IRedisCache>(_ => new RedisCache(options));
     
     /// <summary>
     /// Adds a <see cref="RedisCache"/> to the service collection.
     /// Inner <see cref="IConnectionMultiplexer"/> provided as a parameter.
     /// </summary>
     public static void AddRedisCache(this ServiceCollection services, IConnectionMultiplexer multiplexer) =>
-        services.AddTransient<IRedisCache>(_ => new RedisCache(multiplexer));
+        services.AddSingleton<IRedisCache>(_ => new RedisCache(multiplexer));
 }

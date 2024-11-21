@@ -1,3 +1,8 @@
+# 3.0.1 (2024-11-21)
+## Bug Fix
+- Switch extension methods to stand up singleton instead of transient.
+  - Prevents port exhaustion and large memory usage.
+
 # 3.0.0 (2024-11-15)
 ## Breaking Changes
 - Internally, `RedisCache` utilizes `IConnectionMultiplexer` instead of `IDatabase`.
