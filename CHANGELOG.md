@@ -1,3 +1,8 @@
+# 3.1.0 (2025-09-08)
+## Changes
+- Generate XML documentation.
+- Update packages to latest.
+
 # 3.0.1 (2024-11-21)
 ## Bug Fix
 - Switch extension methods to stand up singleton instead of transient.
